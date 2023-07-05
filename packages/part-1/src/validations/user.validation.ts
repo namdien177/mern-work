@@ -8,14 +8,31 @@ export const searchQueryUserSchema = z
     // can move to enum and use z.nativeEnum.
     findOption: z.enum(['eq', 'lt', 'lte', 'gt', 'gte', 'like']).optional(),
   })
-  .refine((value) => {
+  .superRefine((value, ctx) => {
     if (value.findBy === 'age' && value.query?.trim()) {
       const validQuery = z.coerce
         .number()
         .min(0)
         .max(200)
         .safeParse(value.query.trim());
-      return validQuery.success;
+      if (!validQuery.success) {
+        validQuery.error.issues.forEach((is) =>
+          ctx.addIssue({
+            ...is,
+            message: 'Query is invalid when finding by age',
+          })
+        );
+      }
     }
-    return true;
-  }, 'query must be number when findBy is [age]');
+
+    const numericComparison = ['lt', 'lte', 'gt', 'gte'];
+    const isNumericCompare = numericComparison.includes(
+      value.findOption ?? 'eq'
+    );
+    if (value.findBy !== 'age' && isNumericCompare) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'findBy must be age when using numeric comparison',
+      });
+    }
+  });
