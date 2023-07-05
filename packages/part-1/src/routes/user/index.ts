@@ -34,13 +34,9 @@ router.get(
       const findType = findOption ?? 'eq';
       const numericComparison = ['lt', 'lte', 'gt', 'gte'];
       const isNumericCompare = numericComparison.includes(findType);
-      if (fieldFind !== 'age' && isNumericCompare) {
-        return res.status(400).json({
-          message: 'only finding by [age] is allowed to use numeric comparison',
-        });
-      }
       const searchValue = parserValue(query.trim(), fieldFind);
 
+      // Can extract this logic to separate fn for better clarity.
       findCondition = {
         [fieldFind]: isNumericCompare
           ? {
