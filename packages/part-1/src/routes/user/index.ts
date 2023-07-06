@@ -52,7 +52,7 @@ router.get(
 );
 
 router.patch(
-  ':_id',
+  '/:_id',
   Zodify({
     schema: objectIdSchema,
     mapper: (r) => r.params,
@@ -92,7 +92,7 @@ router.patch(
 );
 
 router.delete(
-  'delete-by-status',
+  '/delete-by-status',
   Zodify({
     schema: userStatusSchema,
     mapper: (r) => r.query,
