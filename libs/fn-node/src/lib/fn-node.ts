@@ -31,7 +31,7 @@ export async function readFullFile(
   const splitter =
     options?.splitter ?? ((content: string) => content.split('\n'));
   const lines = splitter(file);
-  for (const lineContent in lines) {
+  for (const lineContent of lines) {
     await perLineFn(lineContent);
   }
 }
