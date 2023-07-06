@@ -11,17 +11,20 @@
     "strict": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": [
-      "es2020",
-      "dom"
-    ],
+    "lib": ["es2020", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@mw/data-model": ["libs/data-model/src/index.ts"],
+      "@mw/fn": ["libs/fn/src/index.ts"],
+      "@mw/mongodb": ["libs/database/mongodb/src/index.ts"],
+      "@mw/mongodb/collection/*": ["libs/database/mongodb/src/collections/*"],
+      "@mw/zod-validator/schema/*": ["libs/zod-validator/src/lib/schema/*"],
+      "@mw/zod-validator/schema/express/*": [
+        "libs/zod-validator/src/lib/express/*"
+      ]
+    }
   },
-  "exclude": [
-    "node_modules",
-    "tmp"
-  ]
+  "exclude": ["node_modules", "tmp"]
 }

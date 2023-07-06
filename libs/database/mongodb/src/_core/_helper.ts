@@ -5,7 +5,7 @@ export const getCollection = async (db: Db, name: string) => {
   try {
     collection = await db.createCollection(name);
   } catch (e) {
-    if ((e as Record<string, unknown>).code !== 48) {
+    if ((e as Record<string, unknown>)['code'] !== 48) {
       throw new Error('Something wrong with the collection');
     }
     collection = await db.collection(name);

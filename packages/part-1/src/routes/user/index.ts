@@ -1,9 +1,15 @@
 import { Request, Response, Router } from 'express';
 import { z } from 'zod';
-import getUserCollection from '../../database/collections/user.collection';
+import { getFilterCondition, parserValue } from './_helper/search-user.helper';
 import { ObjectId } from 'mongodb';
-import { searchQueryUserSchema } from '../../validations/user.validation';
-import Zodify from '../../middleware/zodify';
+import {
+  objectIdSchema,
+  searchQueryUserSchema,
+  userPatchPayloadSchema,
+  userStatusSchema,
+} from '@mw/zod-validator/schema/user-api.validation';
+import getUserCollection from '@mw/mongodb/collection/user.collection';
+import Zodify from '@mw/zod-validator/schema/express/zodify';
 
 const router = Router();
 
@@ -24,30 +30,16 @@ router.get(
       }),
   }),
   async (req: Request, res: Response) => {
-    const { query, findBy, findOption } = req.query as z.infer<
+    const { query, find_by, find_option } = req.query as z.infer<
       typeof searchQueryUserSchema
     >;
 
     let findCondition: Record<string, unknown> = {};
     if (query?.trim()) {
-      const fieldFind = findBy ?? '_id';
-      const findType = findOption ?? 'eq';
-      const numericComparison = ['lt', 'lte', 'gt', 'gte'];
-      const isNumericCompare = numericComparison.includes(findType);
-      const searchValue = parserValue(query.trim(), fieldFind);
-
+      // pre-process the search value
+      const searchValue = parserValue(query.trim(), find_by);
       // Can extract this logic to separate fn for better clarity.
-      findCondition = {
-        [fieldFind]: isNumericCompare
-          ? {
-              [`$${findType}`]: searchValue,
-            }
-          : findType === 'eq'
-          ? searchValue
-          : {
-              $regex: new RegExp(String(searchValue), 'g'),
-            },
-      };
+      findCondition = getFilterCondition(searchValue, find_by, find_option);
     }
     const userCollection = await getUserCollection();
     const result = await userCollection.find(findCondition).toArray();
@@ -58,18 +50,64 @@ router.get(
   }
 );
 
-const parserValue = (
-  defaultValue: string,
-  findBy: z.infer<typeof searchQueryUserSchema>['findBy']
-) => {
-  switch (findBy) {
-    case '_id':
-      return new ObjectId(defaultValue);
-    case 'age':
-      return Number(defaultValue);
-  }
+router.patch(
+  ':_id',
+  Zodify({
+    schema: objectIdSchema,
+    mapper: (r) => r.params,
+  }),
+  Zodify({
+    schema: userPatchPayloadSchema,
+    mapper: (r) => r.body,
+  }),
+  async (req: Request, res: Response) => {
+    const body = req.body as z.infer<typeof userPatchPayloadSchema>;
+    const { _id } = req.query as z.infer<typeof objectIdSchema>;
+    const filterIdCondition = {
+      _id: new ObjectId(_id),
+    };
 
-  return defaultValue;
-};
+    const userCollection = await getUserCollection();
+    // we can choose to skip checking 404
+    const user = userCollection.findOne(filterIdCondition);
+    if (!user) {
+      return res.status(404).json({
+        message: 'user not exist',
+      });
+    }
+
+    const updateResult = await userCollection.updateOne(
+      filterIdCondition,
+      body
+    );
+    const newData = await userCollection.findOne(filterIdCondition);
+
+    return res.json({
+      message: 'Success',
+      data: newData,
+      meta: updateResult,
+    });
+  }
+);
+
+router.delete(
+  'delete-by-status',
+  Zodify({
+    schema: userStatusSchema,
+    mapper: (r) => r.query,
+  }),
+  async (req: Request, res: Response) => {
+    const { status } = req.query as z.infer<typeof userStatusSchema>;
+    const userCollection = await getUserCollection();
+    const statusFilter = {
+      status,
+    };
+    const result = await userCollection.deleteMany(statusFilter);
+    return res.json({
+      message: 'Delete success',
+      meta: result,
+    });
+  }
+);
 
 export default router;

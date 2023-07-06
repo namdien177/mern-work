@@ -1,4 +1,4 @@
-import { USER_STATUS, UserModel } from '../model/user.model';
+import { USER_STATUS, UserModel } from '@mw/data-model';
 
 export const sampleUsers: Array<Omit<UserModel, '_id'>> = [
   {

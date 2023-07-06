@@ -1,6 +1,6 @@
 import { sampleUsers } from '../../mock/users';
 import { Request, Response, Router } from 'express';
-import getUserCollection from '../../database/collections/user.collection';
+import getUserCollection from '@mw/mongodb/collection/user.collection';
 
 const router = Router();
 

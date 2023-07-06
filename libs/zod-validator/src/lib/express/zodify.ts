@@ -32,6 +32,7 @@ const Zodify = <T extends z.ZodRawShape>(opts: {
 
     return response.status(400).json({
       message: 'Data is invalid',
+      meta: validateResult.error.errors,
     });
   };
 };

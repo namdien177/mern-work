@@ -2,7 +2,10 @@
   "name": "@mern-works/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "preconfig": "docker compose up -d mern_works_mongodb",
+    "part-1": "npm run preconfig && nx serve part-1"
+  },
   "private": true,
   "devDependencies": {
     "@babel/preset-react": "^7.14.5",

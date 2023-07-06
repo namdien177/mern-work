@@ -1,5 +1,5 @@
 import { Db, MongoClient } from 'mongodb';
-import databaseConfig from './_config';
+import databaseConfig from './_core/_config';
 
 let clientConnection: MongoClient;
 let database: Db;
