@@ -42,6 +42,7 @@ router.get(
       findCondition = getFilterCondition(searchValue, find_by, find_option);
     }
     const userCollection = await getUserCollection();
+    console.log(JSON.stringify(findCondition, null, 2));
     const result = await userCollection.find(findCondition).toArray();
 
     return res.json({

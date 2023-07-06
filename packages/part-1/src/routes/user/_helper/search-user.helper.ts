@@ -39,7 +39,6 @@ export const getFilterCondition = (
           $regexMatch: {
             input: fieldCompute,
             regex: searchValue,
-            options: 'g',
           },
         },
       };
