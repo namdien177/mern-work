@@ -4,7 +4,8 @@
   "license": "MIT",
   "scripts": {
     "preconfig": "docker compose up -d mern_works_mongodb",
-    "part-1": "npm run preconfig && nx serve part-1"
+    "part-1": "npm run preconfig && nx serve part-1",
+    "part-2": "npm run preconfig && nx serve part-2"
   },
   "private": true,
   "devDependencies": {

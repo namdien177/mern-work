@@ -20,6 +20,7 @@
       "@mw/fn": ["libs/fn/src/index.ts"],
       "@mw/mongodb": ["libs/database/mongodb/src/index.ts"],
       "@mw/mongodb/collection/*": ["libs/database/mongodb/src/collections/*"],
+      "@mw/mongodb/helpers/*": ["libs/database/mongodb/src/helpers/*"],
       "@mw/zod-validator/schema/*": ["libs/zod-validator/src/lib/schema/*"],
       "@mw/zod-validator/schema/express/*": [
         "libs/zod-validator/src/lib/express/*"

@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { isEmptyObject } from '@mw/fn';
 import { USER_STATUS } from '@mw/data-model';
-import { objectIdSchema } from '@mw/zod-validator/schema/core';
+import { objectIdSchema } from './core';
 
 export const searchQueryUserSchema = z
   .object({

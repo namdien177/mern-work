@@ -1,6 +1,9 @@
 import { Request, Response, Router } from 'express';
 import { z } from 'zod';
-import { getFilterCondition, parserValue } from './_helper/search-user.helper';
+import {
+  getFilterCondition,
+  parserValue,
+} from '@mw/mongodb/helpers/search-user.helper';
 import { ObjectId } from 'mongodb';
 import {
   objectWithIdSchema,
