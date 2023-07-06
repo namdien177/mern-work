@@ -248,7 +248,140 @@
 		},
 		{
 			"name": "part-4",
-			"item": []
+			"item": [
+				{
+					"name": "create user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"something@gmail.com\",\r\n    \"status\": \"active\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:3003/user",
+							"host": [
+								"{{host}}"
+							],
+							"port": "3003",
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete user",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"something@gmail.com\",\r\n    \"status\": \"active\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:3003/user?_id=64a7081a34e003d14869729f",
+							"host": [
+								"{{host}}"
+							],
+							"port": "3003",
+							"path": [
+								"user"
+							],
+							"query": [
+								{
+									"key": "_id",
+									"value": "64a7081a34e003d14869729f"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "word-length",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"something@gmail.com\",\r\n    \"status\": \"active\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:3003/util?str=something",
+							"host": [
+								"{{host}}"
+							],
+							"port": "3003",
+							"path": [
+								"util"
+							],
+							"query": [
+								{
+									"key": "str",
+									"value": "something"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "csv",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"something@gmail.com\",\r\n    \"status\": \"active\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:3003/util?str=something",
+							"host": [
+								"{{host}}"
+							],
+							"port": "3003",
+							"path": [
+								"util"
+							],
+							"query": [
+								{
+									"key": "str",
+									"value": "something"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"event": [
