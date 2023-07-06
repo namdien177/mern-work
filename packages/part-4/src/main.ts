@@ -44,6 +44,6 @@ const server = http.createServer(async (req, res) => {
 
 const port = Number(process.env.PART_4_PORT ?? 3003);
 server.listen(port, () => {
-  console.log(`Listening at http://localhost:${port}/api`);
+  console.log(`Listening at http://localhost:${port}`);
 });
 server.on('error', console.error);
