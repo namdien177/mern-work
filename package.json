@@ -6,7 +6,8 @@
     "preconfig": "docker compose up -d mern_works_mongodb",
     "part-1": "npm run preconfig && nx serve part-1",
     "part-2": "npm run preconfig && nx serve part-2",
-    "part-3": "npm run preconfig && nx serve part-3"
+    "part-3": "npm run preconfig && nx serve part-3",
+    "part-4": "npm run preconfig && nx serve part-4"
   },
   "private": true,
   "devDependencies": {

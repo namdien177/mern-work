@@ -1,20 +1,17 @@
-import * as fs from 'fs';
-
-function readCSV(filePath: string) {
-  const result = [];
-  const csvData = fs.readFileSync(filePath, 'utf8');
-  const lines = csvData.split('\n');
-  for (let i = 0; i < lines.length; i++) {
-    const row = [];
-    const cells = lines[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
-    for (let j = 0; j < cells.length; j++) {
-      let cell = cells[j];
+export const parseAsCSV = (
+  perCell?: (value: string, index: number) => void
+) => {
+  return (raw: string) => {
+    const parsedCells: string[] = [];
+    const cells = raw.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
+    for (let i = 0; i < cells.length; i++) {
+      let cell = cells[i];
       if (cell.startsWith('"') && cell.endsWith('"')) {
         cell = cell.slice(1, -1);
       }
-      row.push(cell);
+      perCell && perCell(cell, i);
+      parsedCells.push(cell);
     }
-    result.push(row);
-  }
-  return result;
-}
+    return parsedCells;
+  };
+};
