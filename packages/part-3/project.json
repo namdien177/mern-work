@@ -22,7 +22,8 @@
         "styles": ["packages/part-3/src/styles.css"],
         "scripts": [],
         "isolatedConfig": true,
-        "webpackConfig": "packages/part-3/webpack.config.js"
+        "webpackConfig": "packages/part-3/webpack.config.js",
+        "postcssConfig": "packages/part-3/postcss.config.js"
       },
       "configurations": {
         "development": {

@@ -5,6 +5,7 @@ export type UserModel = {
   age: number;
   email: string;
   status: USER_STATUS;
+  avatar?: string;
 };
 
 export enum USER_STATUS {

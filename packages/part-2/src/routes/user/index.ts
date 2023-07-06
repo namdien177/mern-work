@@ -110,25 +110,20 @@ router.post(
 );
 
 router.get(
-  '/resource/avatar',
+  '/:_id/avatar',
   Zodify({
-    schema: objectWithIdSchema,
+    schema: z.object({ f: z.string().min(5).max(50) }),
     mapper: (r) => r.query,
   }),
+  Zodify({
+    schema: objectWithIdSchema,
+    mapper: (r) => r.params,
+  }),
   async (req: Request, res: Response) => {
-    const { _id } = req.query as z.infer<typeof objectWithIdSchema>;
+    const { f: avatar } = req.query as { f: string };
+    const { _id } = req.params as z.infer<typeof objectWithIdSchema>;
     // ideally we can cache the user info, or set the caching policy of the API
-    // to reduce the database call.
-    const userCollection = await getUserCollection();
-    const user = await userCollection.findOne({
-      _id: new ObjectId(_id),
-    });
-
-    if (!user || !user.avatar) {
-      return res.status(404).json({ message: 'No resource found' });
-    }
-
-    const avatarPath = path.join(getUserStorage(_id), user.avatar);
+    const avatarPath = path.join(getUserStorage(_id), avatar);
     if (!fs.existsSync(avatarPath)) {
       return res.status(404).json({ message: 'No resource found' });
     }

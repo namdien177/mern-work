@@ -7,9 +7,15 @@ import express from 'express';
 import * as path from 'path';
 import { LogIpMiddleware } from './middleware/log-ip.middleware';
 import user from './routes/user';
+import cors from 'cors';
 
 const app = express();
 
+app.use(
+  cors({
+    origin: 'http://localhost:4200',
+  })
+);
 app.use(LogIpMiddleware);
 
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
