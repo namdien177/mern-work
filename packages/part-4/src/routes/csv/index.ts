@@ -7,6 +7,16 @@ import { parseAsCSV } from '../../service/csv-reader';
 import { UserModel } from '@mw/data-model';
 import { userModelSchema } from '@mw/zod-validator/schema/user.validation';
 import getUserCollection from '@mw/mongodb/collection/user.collection';
+import fs from 'fs';
+
+/**
+ * Mocking position
+ */
+const PATH_READING = path.join(process.cwd(), '.sample');
+
+if (!fs.existsSync(PATH_READING)) {
+  fs.mkdirSync(PATH_READING, { recursive: true });
+}
 
 const route = Router();
 
@@ -21,11 +31,6 @@ const fileNameQuerySchema = z.object({
       return !(fileParts.length === 1 || fileParts.at(-1) !== 'csv');
     }, 'filename must include .csv extension'),
 });
-
-/**
- * Mocking position
- */
-const PATH_READING = path.join(process.cwd(), '.sample');
 
 route.get(
   '/read',
