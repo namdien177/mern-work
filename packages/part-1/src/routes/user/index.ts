@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { getFilterCondition, parserValue } from './_helper/search-user.helper';
 import { ObjectId } from 'mongodb';
 import {
-  objectIdSchema,
+  objectWithIdSchema,
   searchQueryUserSchema,
   userPatchPayloadSchema,
   userStatusSchema,
@@ -52,9 +52,9 @@ router.get(
 );
 
 router.patch(
-  '/:_id',
+  '/update/:_id',
   Zodify({
-    schema: objectIdSchema,
+    schema: objectWithIdSchema,
     mapper: (r) => r.params,
   }),
   Zodify({
@@ -63,7 +63,7 @@ router.patch(
   }),
   async (req: Request, res: Response) => {
     const body = req.body as z.infer<typeof userPatchPayloadSchema>;
-    const { _id } = req.query as z.infer<typeof objectIdSchema>;
+    const { _id } = req.params as z.infer<typeof objectWithIdSchema>;
     const filterIdCondition = {
       _id: new ObjectId(_id),
     };
@@ -76,11 +76,9 @@ router.patch(
         message: 'user not exist',
       });
     }
-
-    const updateResult = await userCollection.updateOne(
-      filterIdCondition,
-      body
-    );
+    const updateResult = await userCollection.updateOne(filterIdCondition, {
+      $set: body,
+    });
     const newData = await userCollection.findOne(filterIdCondition);
 
     return res.json({
@@ -92,7 +90,7 @@ router.patch(
 );
 
 router.delete(
-  '/delete-by-status',
+  '/delete/by-status',
   Zodify({
     schema: userStatusSchema,
     mapper: (r) => r.query,

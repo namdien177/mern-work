@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { isEmptyObject } from '@mw/fn';
 import { USER_STATUS } from '@mw/data-model';
+import { objectIdSchema } from '@mw/zod-validator/schema/core';
 
 export const searchQueryUserSchema = z
   .object({
@@ -48,9 +49,19 @@ export const searchQueryUserSchema = z
         message: 'Comparison with _id must use either `eq` or `like`',
       });
     }
+
+    if (
+      value.query &&
+      (value.find_by === undefined || value.find_by === '_id')
+    ) {
+      const validQuery = objectIdSchema.safeParse(value.query);
+      if (!validQuery.success) {
+        validQuery.error.issues.forEach((is) => ctx.addIssue(is));
+      }
+    }
   });
 
-export const objectIdSchema = z.object({ _id: z.string().min(1) });
+export const objectWithIdSchema = z.object({ _id: objectIdSchema });
 
 export const userStatusSchema = z.object({
   status: z.nativeEnum(USER_STATUS),
