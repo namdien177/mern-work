@@ -6,8 +6,7 @@
 
 # Parts:
 
-Each part's source code is separated into folders at `/packages`; only `part-5` contains 2 folder (1 for server, 1 for
-client).
+Each part's source code is separated into folders at `/packages`; only `part-5` contains 2 folders (1 for the server, 1 for the client).
 
 # Pre-Setup:
 
@@ -15,7 +14,7 @@ You will need:
 
 - Docker Compose (latest to support `docker compose` statement).
 - NodeJS LTS
-- _Optional_: PNPM is more prefered for installing packages
+- _Optional_: PNPM is more preferred to installing packages
 
 Commands to setup environment:
 
@@ -72,3 +71,7 @@ Notes:
 easy to use, and since the internal logic of reading file is the same, I implemented it as an API.
 
 - `part-5`: is a parallel run of 2 source code (expressjs and react).
+
+# Troubleshoot
+- The code in this repo is far from perfect, but it should be enough to demonstrate the understanding and problem-solving skill.
+- Since `nx daemon` can be a little troublesome when running on Windows, in case the commands cannot start because of it, you can build the code directly (using `nx build <project name>`) and run it just like a JS code in the `dist` folder.
