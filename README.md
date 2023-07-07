@@ -57,7 +57,7 @@ npm run part-X
 ```
 
 Notes:
-- ALl client code is hosted on port 4200 (default of Nx, can modify in `project.json`);
+- ALl client code is hosted on port 4200 - `http://localhost:4200` (default of Nx, can modify in `project.json`);
 - NodeJS servers are served in port they are defined in `.env` file.
 - `part-1`: has an API which can initiate the database records by running the following API.
   ```bash
