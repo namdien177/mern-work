@@ -17,8 +17,7 @@ const Page = () => {
       ky.get(API_DOMAIN`schedule/` + router.id).json<{ data: ScheduleModel }>(),
   });
 
-  const { mutateAsync: update, isLoading: updateLoading } =
-    useMutateUpdateSchedule();
+  const { mutateAsync: update, error } = useMutateUpdateSchedule();
 
   const onSubmit = async (
     data: z.infer<typeof clientScheduleBaseSchema> & { _id: string }
@@ -47,6 +46,7 @@ const Page = () => {
           onCancel={onCancel}
         />
       )}
+      {!!error && <span className={'text-red-600'}>Data submit error</span>}
     </div>
   );
 };

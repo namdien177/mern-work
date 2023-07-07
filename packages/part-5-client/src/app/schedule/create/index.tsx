@@ -21,7 +21,7 @@ const Page = () => {
   });
 
   const navigate = useNavigate();
-  const { mutateAsync, isLoading } = useMutateCreateSchedule();
+  const { mutateAsync, isLoading, error } = useMutateCreateSchedule();
 
   const onSubmit = async (data: z.infer<typeof clientScheduleBaseSchema>) => {
     console.log(data);
@@ -103,6 +103,7 @@ const Page = () => {
           Create Schedule
         </button>
       </div>
+      {!!error && <span className={'text-red-600'}>Data submit error</span>}
     </form>
   );
 };
