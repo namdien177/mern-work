@@ -70,7 +70,12 @@ Notes:
 - `part-4`: You can replace the example file in `.sample` directory. Although the requirement is to write a NodeJS script (trigger from terminal, I suppose), but for quick implementation,
 easy to use, and since the internal logic of reading file is the same, I implemented it as an API.
 
-- `part-5`: is a parallel run of 2 source code (expressjs and react).
+- `part-5`: is a parallel run of 2 source code (expressjs and react). This part also have a mocking API for `blogs`
+  ```bash
+  # You can use this API to reset the DB after tweaking with it
+  # Amount should be 1->100
+  curl --location 'http://localhost:3004/api/blog/refresh?amount=100'
+  ```
 
 # Troubleshoot
 - The code in this repo is far from perfect, but it should be enough to demonstrate the understanding and problem-solving skill.
