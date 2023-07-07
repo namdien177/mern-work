@@ -82,7 +82,7 @@ export default function UpdateForm({ schedule, onSubmit, onCancel }: Props) {
           {...register('to_date')}
         />
       </div>
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-end">
         <button
           className="border border-transparent hover:bg-red-200 text-red-600 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           type="button"
