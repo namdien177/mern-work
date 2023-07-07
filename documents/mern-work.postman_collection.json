@@ -363,18 +363,86 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}:3003/util?str=something",
+							"raw": "{{host}}:3003/csv?file_name=file-example.csv",
 							"host": [
 								"{{host}}"
 							],
 							"port": "3003",
 							"path": [
-								"util"
+								"csv"
 							],
 							"query": [
 								{
-									"key": "str",
-									"value": "something"
+									"key": "file_name",
+									"value": "file-example.csv"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "part-5",
+			"item": [
+				{
+					"name": "refresh blogs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}:3004/api/blog/refresh?amount=5",
+							"host": [
+								"{{host}}"
+							],
+							"port": "3004",
+							"path": [
+								"api",
+								"blog",
+								"refresh"
+							],
+							"query": [
+								{
+									"key": "amount",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search blogs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}:3004/api/blog",
+							"host": [
+								"{{host}}"
+							],
+							"port": "3004",
+							"path": [
+								"api",
+								"blog"
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "after",
+									"value": "",
+									"description": "ISO date",
+									"disabled": true
+								},
+								{
+									"key": "size",
+									"value": "",
+									"disabled": true
 								}
 							]
 						}
