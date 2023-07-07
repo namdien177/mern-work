@@ -80,3 +80,4 @@ easy to use, and since the internal logic of reading file is the same, I impleme
 # Troubleshoot
 - The code in this repo is far from perfect, but it should be enough to demonstrate the understanding and problem-solving skill.
 - Since `nx daemon` can be a little troublesome when running on Windows, in case the commands cannot start because of it, you can build the code directly (using `nx build <project name>`) and run it just like a JS code in the `dist` folder.
+- Some error handling logic is skipped for faster implementation speed... But generally it should not impact too much
