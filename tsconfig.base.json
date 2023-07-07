@@ -16,6 +16,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@mw/zod-node": ["libs/zod-node/src/index.ts"],
       "@mw/data-model": ["libs/data-model/src/index.ts"],
       "@mw/fn": ["libs/fn/src/index.ts"],
       "@mw/fn-node": ["libs/fn-node/src/index.ts"],

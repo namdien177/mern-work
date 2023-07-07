@@ -6,13 +6,13 @@ import {
 } from '@mw/mongodb/helpers/search-user.helper';
 import { ObjectId } from 'mongodb';
 import {
-  objectWithIdSchema,
   searchQueryUserSchema,
   userPatchPayloadSchema,
   userStatusSchema,
 } from '@mw/zod-validator/schema/user-api.validation';
 import getUserCollection from '@mw/mongodb/collection/user.collection';
 import Zodify from '@mw/zod-validator/schema/express/zodify';
+import { objectWithIdSchema } from '@mw/zod-node';
 
 const router = Router();
 

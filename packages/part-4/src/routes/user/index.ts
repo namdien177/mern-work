@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { userModelSchema } from '@mw/zod-validator/schema/user.validation';
 import getUserCollection from '@mw/mongodb/collection/user.collection';
-import { objectWithIdSchema } from '@mw/zod-validator/schema/user-api.validation';
+import { objectWithIdSchema } from '@mw/zod-node';
 import { ObjectId } from 'mongodb';
 import { RouteType } from '../../helper/route';
 import { useSearchParam } from '../../helper/searchParams';

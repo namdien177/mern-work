@@ -3,4 +3,5 @@
 
 export const environment = {
   production: false,
-};
+  api_host: 'http://localhost:3004',
+} as const;

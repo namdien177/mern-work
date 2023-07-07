@@ -1,7 +1,6 @@
 import { z } from 'zod';
 import { isEmptyObject } from '@mw/fn';
 import { USER_STATUS } from '@mw/data-model';
-import { objectIdSchema } from './core';
 
 export const searchQueryUserSchema = z
   .object({
@@ -54,14 +53,12 @@ export const searchQueryUserSchema = z
       value.query &&
       (value.find_by === undefined || value.find_by === '_id')
     ) {
-      const validQuery = objectIdSchema.safeParse(value.query);
+      const validQuery = z.string().min(24).safeParse(value.query);
       if (!validQuery.success) {
         validQuery.error.issues.forEach((is) => ctx.addIssue(is));
       }
     }
   });
-
-export const objectWithIdSchema = z.object({ _id: objectIdSchema });
 
 export const userStatusSchema = z.object({
   status: z.nativeEnum(USER_STATUS),

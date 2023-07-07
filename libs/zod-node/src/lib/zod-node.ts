@@ -8,3 +8,5 @@ export const objectIdSchema = z.string().refine((val) => {
     return false;
   }
 }, 'Value is not ObjectId type');
+
+export const objectWithIdSchema = z.object({ _id: objectIdSchema });

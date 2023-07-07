@@ -27,7 +27,7 @@ const router = createBrowserRouter(
       <Route path="/" element={<Navigate to={'/schedule'} />} />
       <Route path="/schedule" element={<SchedulePage />} />
       <Route path="/schedule/create" element={<ScheduleCreatePage />} />
-      <Route path="/schedule/update" element={<ScheduleUpdatePage />} />
+      <Route path="/schedule/:id/edit" element={<ScheduleUpdatePage />} />
       <Route path="/blogs" element={<BlogsPage />} />
     </Route>
   )

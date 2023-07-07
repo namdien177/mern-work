@@ -1,9 +1,6 @@
 import { Request, Response, Router } from 'express';
 import Zodify from '@mw/zod-validator/schema/express/zodify';
-import {
-  objectWithIdSchema,
-  searchQueryUserSchema,
-} from '@mw/zod-validator/schema/user-api.validation';
+import { searchQueryUserSchema } from '@mw/zod-validator/schema/user-api.validation';
 import { z } from 'zod';
 import {
   getFilterCondition,
@@ -18,6 +15,7 @@ import { ObjectId } from 'mongodb';
 import fs from 'fs';
 import path from 'path';
 import { getUserStorage } from '../../const/upload/user-file';
+import { objectWithIdSchema } from '@mw/zod-node';
 
 const router = Router();
 const avatarUpload = multer({

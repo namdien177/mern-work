@@ -1,36 +1,37 @@
-import { ScheduleModel } from '@mw/data-model';
 import ScheduleItem from './_components/schedule-item';
-
-const schedules: ScheduleModel[] = [
-  { _id: '1', name: 'Meeting', from_date: '2023-07-07', to_date: '2023-07-08' },
-  {
-    _id: '2',
-    name: 'Conference',
-    from_date: '2023-07-09',
-    to_date: '2023-07-10',
-  },
-];
+import { Link } from 'react-router-dom';
+import { useQuerySchedule } from '../../shared/api-hook/schedule/schedule.api';
 
 const Page = () => {
-  const handleEdit = (id: string) => {
-    // handle edit logic here
-  };
-
-  const handleDelete = (id: string) => {
-    // handle delete logic here
-  };
+  const { data, isLoading, refetch } = useQuerySchedule();
 
   return (
-    <ul className="list-none p-0">
-      {schedules.map((schedule) => (
-        <ScheduleItem
-          schedule={schedule}
-          key={schedule._id}
-          onEdit={handleEdit}
-          onDelete={handleDelete}
-        />
-      ))}
-    </ul>
+    <div className={'container flex flex-col mx-auto p-8'}>
+      <div className="flex">
+        <Link
+          to={'/schedule/create'}
+          className={'px-4 py-2 font-semibold rounded bg-green-600 text-white'}
+        >
+          Create
+        </Link>
+      </div>
+
+      <hr className={'my-8'} />
+
+      {isLoading && <>Loading...</>}
+
+      {data?.data && !isLoading && (
+        <ul className="list-none p-0 space-y-2">
+          {data.data.map((schedule) => (
+            <ScheduleItem
+              schedule={schedule}
+              onDeleted={refetch}
+              key={schedule._id}
+            />
+          ))}
+        </ul>
+      )}
+    </div>
   );
 };
 

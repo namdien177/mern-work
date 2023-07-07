@@ -1,37 +1,40 @@
+import { ScheduleModel } from '@mw/data-model';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useNavigate } from 'react-router-dom';
-import { useMutateCreateSchedule } from '../../../shared/api-hook/schedule/schedule.api';
 import {
   clientRefineScheduleDate,
   clientScheduleBaseSchema,
-} from '../../../shared/zod/schedule';
+} from '../../../../shared/zod/schedule';
 
-const createSchedule = clientScheduleBaseSchema.superRefine(
-  clientRefineScheduleDate
-);
+type Props = {
+  schedule: ScheduleModel;
+  onSubmit: (data: z.infer<typeof updateSchema>) => unknown;
+  onCancel: () => void;
+};
 
-const Page = () => {
-  const { register, watch, handleSubmit, formState } = useForm<
-    z.infer<typeof clientScheduleBaseSchema>
+const updateSchema = clientScheduleBaseSchema
+  .extend({
+    _id: z.string().min(24),
+  })
+  .superRefine(clientRefineScheduleDate);
+
+export default function UpdateForm({ schedule, onSubmit, onCancel }: Props) {
+  const { register, watch, handleSubmit } = useForm<
+    z.infer<typeof updateSchema>
   >({
-    resolver: zodResolver(createSchedule),
-    mode: 'onBlur',
+    resolver: zodResolver(updateSchema),
+    defaultValues: {
+      _id: schedule._id,
+      name: schedule.name,
+      // a bit hacky...since date input default is quite annoying...using lib with parser will be much better
+      from_date: new Date(schedule.from_date).toLocaleDateString('en-CA'),
+      to_date: schedule.to_date
+        ? new Date(schedule.to_date).toLocaleDateString('en-CA')
+        : undefined,
+    },
   });
-
-  const navigate = useNavigate();
-  const { mutateAsync, isLoading } = useMutateCreateSchedule();
-
-  const onSubmit = async (data: z.infer<typeof clientScheduleBaseSchema>) => {
-    console.log(data);
-    await mutateAsync({
-      ...data,
-      to_date: data.to_date ? new Date(data.to_date).toISOString() : undefined,
-      from_date: new Date(data.from_date).toISOString(),
-    });
-    navigate('/schedule');
-  };
 
   console.log(watch());
 
@@ -50,11 +53,6 @@ const Page = () => {
           type="text"
           {...register('name')}
         />
-        {formState.errors.name && (
-          <p className={'text-sm text-red-600'}>
-            {formState.errors.name.message}
-          </p>
-        )}
       </div>
       <div className="mb-4">
         <label
@@ -69,11 +67,6 @@ const Page = () => {
           type="date"
           {...register('from_date')}
         />
-        {formState.errors.from_date && (
-          <p className={'text-sm text-red-600'}>
-            {formState.errors.from_date.message}
-          </p>
-        )}
       </div>
       <div className="mb-6">
         <label
@@ -88,23 +81,22 @@ const Page = () => {
           type="date"
           {...register('to_date')}
         />
-        {formState.errors.to_date && (
-          <p className={'text-sm text-red-600'}>
-            {formState.errors.to_date.message}
-          </p>
-        )}
       </div>
       <div className="flex items-center justify-between">
         <button
-          disabled={isLoading || !formState.isValid}
-          className="bg-blue-500 disabled:bg-slate-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2"
           type="submit"
         >
-          Create Schedule
+          Update Schedule
+        </button>
+        <button
+          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          type="button"
+          onClick={onCancel}
+        >
+          Cancel
         </button>
       </div>
     </form>
   );
-};
-
-export default Page;
+}
