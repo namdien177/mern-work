@@ -84,7 +84,7 @@ export default function UpdateForm({ schedule, onSubmit, onCancel }: Props) {
       </div>
       <div className="flex items-center justify-end space-x-2">
         <button
-          className="border border-transparent hover:bg-red-200 text-red-600 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          className="border border-red-500 hover:bg-red-100 text-red-600 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           type="button"
           onClick={onCancel}
         >
