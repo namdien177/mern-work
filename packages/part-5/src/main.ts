@@ -6,6 +6,7 @@
 import express from 'express';
 import * as path from 'path';
 import scheduleApi from './routes/schedule';
+import blogApi from './routes/blog';
 import cors from 'cors';
 
 const app = express();
@@ -22,6 +23,7 @@ app.use(
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
 app.use('/api/schedule', scheduleApi);
+app.use('/api/blog', blogApi);
 
 const port = process.env.PART_5_PORT || 3004;
 const server = app.listen(port, () => {
