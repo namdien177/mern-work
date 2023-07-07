@@ -35,7 +35,7 @@ const Page = () => {
   };
 
   return (
-    <div className={'container mx-auto'}>
+    <div className={'container max-w-md p-8 flex flex-col space-y-4 mx-auto'}>
       <h1>Update:</h1>
       <hr />
       {isLoading && <p>Loading...</p>}

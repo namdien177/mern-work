@@ -13,7 +13,7 @@ const createSchedule = clientScheduleBaseSchema.superRefine(
 );
 
 const Page = () => {
-  const { register, watch, handleSubmit, formState } = useForm<
+  const { register, handleSubmit, formState } = useForm<
     z.infer<typeof clientScheduleBaseSchema>
   >({
     resolver: zodResolver(createSchedule),
@@ -33,11 +33,16 @@ const Page = () => {
     navigate('/schedule');
   };
 
-  console.log(watch());
+  const onCancel = () => {
+    navigate('/schedule');
+  };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="p-8 container mx-auto">
-      <div className="mb-4">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="container max-w-md p-8 flex flex-col space-y-4 mx-auto"
+    >
+      <div>
         <label
           className="block text-gray-700 text-sm font-bold mb-2"
           htmlFor="name"
@@ -56,7 +61,7 @@ const Page = () => {
           </p>
         )}
       </div>
-      <div className="mb-4">
+      <div>
         <label
           className="block text-gray-700 text-sm font-bold mb-2"
           htmlFor="from_date"
@@ -75,7 +80,7 @@ const Page = () => {
           </p>
         )}
       </div>
-      <div className="mb-6">
+      <div>
         <label
           className="block text-gray-700 text-sm font-bold mb-2"
           htmlFor="to_date"
@@ -94,7 +99,17 @@ const Page = () => {
           </p>
         )}
       </div>
+
+      <hr />
+
       <div className="flex items-center justify-between">
+        <button
+          className="border border-transparent hover:bg-red-200 text-red-600 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          type="button"
+          onClick={onCancel}
+        >
+          Cancel
+        </button>
         <button
           disabled={isLoading || !formState.isValid}
           className="bg-blue-500 disabled:bg-slate-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"

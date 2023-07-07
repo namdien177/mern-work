@@ -68,16 +68,23 @@ const Page = () => {
   };
 
   return (
-    <div className={'container mx-auto p-8'}>
+    <div className={'container max-w-2xl mx-auto p-8'}>
       <div className="space-x-2 flex">
         <input
           defaultValue={searchValue ?? ''}
           type="text"
+          placeholder={'search for title...'}
           onChange={(e) => setSearchValue(e.currentTarget.value)}
           className={'flex-1 border rounded p-2'}
         />
 
-        <button onClick={() => search()} className={'border py-2 px-4'}>
+        <button
+          disabled={isLoading}
+          onClick={() => search()}
+          className={
+            'border disabled:bg-slate-500 hover:bg-slate-50 rounded py-2 px-4'
+          }
+        >
           Search
         </button>
       </div>
@@ -87,11 +94,19 @@ const Page = () => {
           <hr className={'my-8'} />
 
           {data.data.map((blog) => (
-            <div key={blog._id} className="flex p-8 border rounded flex-col">
-              <span className={'text-xs text-gray-600'}>{blog._id}</span>
-              <p>{blog.title}</p>
+            <div
+              key={blog._id}
+              className="flex p-4 border rounded flex-col mb-8"
+            >
+              <span className={'text-xs text-gray-600'}>
+                <span className={'font-semibold'}>#-</span>
+                <span>{blog._id}</span>
+              </span>
+              <p className={'font-semibold text-lg py-2'}>{blog.title}</p>
               <hr className={'my-2'} />
-              <p className={'overflow-hidden max-h-20'}>{blog.content}</p>
+              <p className={'overflow-hidden max-h-16 text-justify'}>
+                {blog.content}
+              </p>
               <p className={'text-right text-gray-600'}>
                 {dayjs(blog.created_at).toDate().toDateString()}
               </p>
@@ -99,11 +114,17 @@ const Page = () => {
           ))}
 
           <hr className={'my-8'} />
-          {data.data.length > 1 && (
-            <button onClick={() => findMore(data.data.at(-1)!.created_at)}>
-              Next Page
-            </button>
-          )}
+          <div className="flex justify-end">
+            {/*TODO: We can implement previous page here by query blogs less than the first date*/}
+            {data.data.length > 1 && (
+              <button
+                className={'py-2 px-4 border rounded hover:bg-slate-100'}
+                onClick={() => findMore(data.data.at(-1)!.created_at)}
+              >
+                Next Page
+              </button>
+            )}
+          </div>
         </>
       )}
     </div>

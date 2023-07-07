@@ -69,31 +69,15 @@ router.get(
     } = req.query as unknown as z.infer<typeof searchParamSchema>;
 
     const blogCollection = await getBlogCollection();
-    let find: Partial<{ $and: Array<Record<string, unknown>> }> = {};
+    const find: Record<string, unknown> = {};
     if (query) {
-      const andStatement = find.$and ?? [];
-      andStatement.push({
-        $expr: {
-          $regexMatch: {
-            input: 'title',
-            regex: query,
-          },
-        },
-      });
-      find = {
-        $and: andStatement,
+      find.title = {
+        $regex: new RegExp(query, 'g'),
       };
     }
     if (after) {
-      const andStatement = find.$and ?? [];
-      const toDateInstance = dayjs(after).toDate();
-      andStatement.push({
-        created_at: {
-          $gt: toDateInstance,
-        },
-      });
-      find = {
-        $and: andStatement,
+      find.created_at = {
+        $gt: dayjs(after).toDate(),
       };
     }
     const result = await blogCollection

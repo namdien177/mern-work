@@ -6,11 +6,13 @@ const Page = () => {
   const { data, isLoading, refetch } = useQuerySchedule();
 
   return (
-    <div className={'container flex flex-col mx-auto p-8'}>
-      <div className="flex">
+    <div className={'container flex flex-col max-w-4xl mx-auto p-8'}>
+      <div className="flex justify-end">
         <Link
           to={'/schedule/create'}
-          className={'px-4 py-2 font-semibold rounded bg-green-600 text-white'}
+          className={
+            'px-4 py-2 font-semibold rounded hover:bg-green-700 bg-green-600 text-white'
+          }
         >
           Create
         </Link>
